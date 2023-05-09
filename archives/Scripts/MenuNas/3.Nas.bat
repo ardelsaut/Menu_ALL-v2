@@ -1,0 +1,1 @@
+powershell.exe -ExecutionPolicy Bypass -File ".\3.Nas.ps1"

@@ -1,0 +1,1 @@
+﻿get-childitem $FileLocale -Force -Recurse | Unblock-File

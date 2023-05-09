@@ -1,0 +1,74 @@
+﻿# Import-Module -DisableNameChecking "$FileLocale\..\modules\Remove-ItemVerified.psm1"
+# Import-Module -DisableNameChecking "$FileLocale\..\modules\Set-ItemPropertyVerified.psm1"
+# Write-Host "Kill OneDrive process..."
+# taskkill.exe /F /IM "OneDrive.exe"
+# taskkill.exe /F /IM "explorer.exe"
+# Write-Host "Remove OneDrive."
+# if (Test-Path "$env:systemroot\System32\OneDriveSetup.exe") {
+#     & "$env:systemroot\System32\OneDriveSetup.exe" /uninstall
+# }
+# if (Test-Path "$env:systemroot\SysWOW64\OneDriveSetup.exe") {
+#     & "$env:systemroot\SysWOW64\OneDriveSetup.exe" /uninstall
+# }
+# Write-Host "Removing OneDrive leftovers..."
+# Remove-ItemVerified -Recurse -Force -ErrorAction SilentlyContinue "$env:localappdata\Microsoft\OneDrive"
+# Remove-ItemVerified -Recurse -Force -ErrorAction SilentlyContinue "$env:programdata\Microsoft OneDrive"
+# Remove-ItemVerified -Recurse -Force -ErrorAction SilentlyContinue "$env:systemdrive\OneDriveTemp"
+# # check if directory is empty before removing:
+# If ((Get-ChildItem "$env:userprofile\OneDrive" -Recurse | Measure-Object).Count -eq 0) {
+#     Remove-ItemVerified -Recurse -Force -ErrorAction SilentlyContinue "$env:userprofile\OneDrive"
+# }
+# Write-Host "Disable OneDrive via Group Policies."
+# Set-ItemPropertyVerified -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\OneDrive" "DisableFileSyncNGSC" 1
+# Write-Host "Remove Onedrive from explorer sidebar."
+# New-PSDrive -PSProvider "Registry" -Root "HKEY_CLASSES_ROOT" -Name "HKCR"
+# mkdir -Force "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
+# Set-ItemPropertyVerified -Path "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" "System.IsPinnedToNameSpaceTree" 0
+# mkdir -Force "HKCR:\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
+# Set-ItemPropertyVerified -Path "HKCR:\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" "System.IsPinnedToNameSpaceTree" 0
+# Remove-PSDrive "HKCR"
+# # Thank you Matthew Israelsson
+# Write-Host "Removing run hook for new users..."
+# reg load "hku\Default" "C:\Users\Default\NTUSER.DAT"
+# reg delete "HKEY_USERS\Default\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetup" /f
+# reg unload "hku\Default"
+# Write-Host "Removing startmenu entry..."
+# Remove-ItemVerified -Force -ErrorAction SilentlyContinue "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk"
+# Write-Host "Removing scheduled task..."
+# Get-ScheduledTask -TaskPath '\' -TaskName 'OneDrive*' -ea SilentlyContinue | Unregister-ScheduledTask -Confirm:$false
+# Write-Host "Restarting explorer..."
+# Start-Process "explorer.exe"
+# Write-Host "Waiting for explorer to complete loading..."
+# Start-Sleep 5
+# Pause
+
+
+# Create a new file
+if (Test-Path -Path "C:\Temp\MyConfigFile.wsb") {
+    Remove-Item -Path "C:\Temp\MyConfigFile.wsb" -Recurse -Force
+} 
+New-Item -Path 'C:\Temp\MyConfigFile.wsb' -ItemType File
+# Add the configuration text to the file
+@"
+<Configuration>
+  <VGPU>Enable</VGPU>
+  <Networking>Enable</Networking>
+  <MappedFolders>
+    <MappedFolder>
+      <HostFolder>V:\03.PC\01.WINDOWS\04.COMPILATION_SCRIPTS</HostFolder>
+      <ReadOnly>false</ReadOnly>
+    </MappedFolder>
+  </MappedFolders>
+  <LogonCommand>
+    <Command></Command>
+  </LogonCommand>
+  <AudioInput>Enable</AudioInput>
+  <VideoInput>Enable</VideoInput>
+  <ProtectedClient>Enable</ProtectedClient>
+  <PrinterRedirection>enable</PrinterRedirection>
+  <ClipboardRedirection>Enable</ClipboardRedirection>
+  <MemoryInMB>8192</MemoryInMB>
+</Configuration>
+"@ | Out-File 'C:\Temp\MyConfigFile.wsb'
+Pause
+Remove-Item -Path "C:\Temp\MyConfigFile.wsb" -Recurse -Force
