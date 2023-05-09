@@ -10,7 +10,7 @@ do {
     }    
     1
     {
-        & "$FileLocale\..\Scripts\Menu Programmes et Applications\MenuBackup\1.BackupConfigPc.ps1"
+        & "$FileLocale\..\Scripts\Menu Programmes et Applications\MenuBackup\2.RestoreConfigPc.ps1"
         & "$Retourmenu"
         exit
     }    
