@@ -42,20 +42,22 @@ if ($filePath -eq "") {
             $folderBrowserDialog.Description = "Select a folder"
             $folderBrowserDialog.SelectedPath = [Environment]::GetFolderPath('Desktop')
             $result = $folderBrowserDialog.ShowDialog()
-
             if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
                 $folderPath = $folderBrowserDialog.SelectedPath
-                codium "$filePath" | Out-Null
+                Clear-Host
+                codium "$folderPath" | Out-Null
                 Pause
                 Clear-Host
                 exit
                         }
             else {
+                Clear-Host
                 Write-Output "No folder was selected."
                 Pause
                 Clear-Host
                 Exit     
             }
+            Clear-Host
             codium "$folderPath" | Out-Null
             Pause
             Clear-Host
