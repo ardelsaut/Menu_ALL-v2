@@ -1,8 +1,6 @@
 ﻿Clear-Host
 Write-Host "Création d'un lien symbolique" -ForegroundColor Cyan
-Write-Host "Veuillez fournir le path complet source" -ForegroundColor Cyan
 $PathLinkOrigin = Read-Host "Path du dossier source"
-Write-Host "Laissez vide si vous voulez choisir en GUI" -ForegroundColor Cyan
 $PathToLink = Read-Host "Path du dossier symbolisé"
 New-Item -ItemType SymbolicLink -Path "$PathToLink" -Target "$PathLinkOrigin"
 Pause

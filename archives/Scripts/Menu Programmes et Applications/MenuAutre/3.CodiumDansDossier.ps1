@@ -39,10 +39,10 @@ if ($filePath -eq "") {
         {
             Add-Type -AssemblyName System.Windows.Forms
             $folderBrowserDialog = New-Object System.Windows.Forms.FolderBrowserDialog
-            $folderBrowserDialog.Description = "Select a folder"
-            $folderBrowserDialog.SelectedPath = [Environment]::GetFolderPath('Desktop')
+            $folderBrowserDialog.Description = "Choisissez un dossier"
+            $folderBrowserDialog.SelectedPath = [System.Environment+SpecialFolder]::MyComputer
             $result = $folderBrowserDialog.ShowDialog()
-            if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
+            if($result.ShowDialog() -eq 'OK') {
                 $folderPath = $folderBrowserDialog.SelectedPath
                 Clear-Host
                 codium "$folderPath" | Out-Null
@@ -57,11 +57,6 @@ if ($filePath -eq "") {
                 Clear-Host
                 Exit     
             }
-            Clear-Host
-            codium "$folderPath" | Out-Null
-            Pause
-            Clear-Host
-            Exit        
         }
         # Retour
         2
@@ -72,14 +67,9 @@ if ($filePath -eq "") {
     }}until ($MenuFilePicker -in "2")
 
 } else {
-                codium "$folderPath" | Out-Null
-}
+                Clear-Host
+                codium "$filePath" | Out-Null
+                Clear-Host
+            }
 Pause
 Clear-Host
-
-
-$acl = Get-Acl "V:\03.PC\01.WINDOWS\04.COMPILATION_SCRIPTS\Menu_ALL-v2\.vscode"
-
-$acl.SetOwner([System.Security.Principal.NTAccount] "Administrators")
-
-Set-Acl "V:\03.PC\01.WINDOWS\04.COMPILATION_SCRIPTS\Menu_ALL-v2\.vscode" $acl

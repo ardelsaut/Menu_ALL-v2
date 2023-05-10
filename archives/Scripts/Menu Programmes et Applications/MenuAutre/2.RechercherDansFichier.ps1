@@ -1,8 +1,8 @@
 ﻿Clear-Host
 $SearchWord = Read-Host "Quel est le mot à rechercher dans les fichier"
-# $folderPath = Read-Host "Dans quel path faut-il chercher?"
 Clear-Host
-$rootFolder = Read-Host "Dans quel path faut-il chercher? Si rien n'est choisis, un prompt apparait pour s´lectionner le dossier"
+Write-Host "Si rien n'est choisi, un prompt apparait pour sélectionner le dossier"
+$rootFolder = Read-Host "Dans quel path faut-il chercher?"
 if($rootFolder -eq ""){
     Add-Type -AssemblyName System.Windows.Forms
     $folderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog
@@ -10,7 +10,6 @@ if($rootFolder -eq ""){
     $folderBrowser.RootFolder = [System.Environment+SpecialFolder]::MyComputer
     if($folderBrowser.ShowDialog() -eq 'OK') {
     $rootFolder = $folderBrowser.SelectedPath
-    Write-Output "Selected path is: $rootFolder"
     }
 }
 Clear-Host
