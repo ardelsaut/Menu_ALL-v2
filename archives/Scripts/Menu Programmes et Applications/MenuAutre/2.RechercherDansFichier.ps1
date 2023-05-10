@@ -1,7 +1,18 @@
 ﻿Clear-Host
-$rootFolder = Read-Host "Dans quel path faut-il chercher?"
-Clear-Host
 $SearchWord = Read-Host "Quel est le mot à rechercher dans les fichier"
+# $folderPath = Read-Host "Dans quel path faut-il chercher?"
+Clear-Host
+$rootFolder = Read-Host "Dans quel path faut-il chercher? Si rien n'est choisis, un prompt apparait pour s´lectionner le dossier"
+if($rootFolder -eq ""){
+    Add-Type -AssemblyName System.Windows.Forms
+    $folderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog
+    $folderBrowser.Description = "Choisissez un dossier"
+    $folderBrowser.RootFolder = [System.Environment+SpecialFolder]::MyComputer
+    if($folderBrowser.ShowDialog() -eq 'OK') {
+    $rootFolder = $folderBrowser.SelectedPath
+    Write-Output "Selected path is: $rootFolder"
+    }
+}
 Clear-Host
 Write-Host "Recherche en cours..." -foregroundColor Cyan
 Write-Host "Un peu de patience..." -foregroundColor Cyan
@@ -23,3 +34,6 @@ else {
 }
 Pause
 Clear-Host
+
+
+# Search for the word in all files in the specified folder

@@ -34,3 +34,4 @@ if (!(Test-Path "$FileLocale\..\modules\.exe\7zr.exe")){
     $Start_7Zip = "$FileLocale\..\modules\.exe\7zr.exe"
 }
 $Start_7Zip x $FichierZip -o$env:USERPROFILE
+
