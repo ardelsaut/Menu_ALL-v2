@@ -43,32 +43,3 @@
 # Pause
 
 
-# Create a new file
-if (Test-Path -Path "C:\Temp\MyConfigFile.wsb") {
-    Remove-Item -Path "C:\Temp\MyConfigFile.wsb" -Recurse -Force
-} 
-New-Item -Path 'C:\Temp\MyConfigFile.wsb' -ItemType File
-# Add the configuration text to the file
-@"
-<Configuration>
-  <VGPU>Enable</VGPU>
-  <Networking>Enable</Networking>
-  <MappedFolders>
-    <MappedFolder>
-      <HostFolder>V:\03.PC\01.WINDOWS\04.COMPILATION_SCRIPTS</HostFolder>
-      <ReadOnly>false</ReadOnly>
-    </MappedFolder>
-  </MappedFolders>
-  <LogonCommand>
-    <Command></Command>
-  </LogonCommand>
-  <AudioInput>Enable</AudioInput>
-  <VideoInput>Enable</VideoInput>
-  <ProtectedClient>Enable</ProtectedClient>
-  <PrinterRedirection>enable</PrinterRedirection>
-  <ClipboardRedirection>Enable</ClipboardRedirection>
-  <MemoryInMB>8192</MemoryInMB>
-</Configuration>
-"@ | Out-File 'C:\Temp\MyConfigFile.wsb'
-Pause
-Remove-Item -Path "C:\Temp\MyConfigFile.wsb" -Recurse -Force

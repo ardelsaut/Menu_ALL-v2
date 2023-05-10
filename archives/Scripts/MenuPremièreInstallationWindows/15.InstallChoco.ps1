@@ -4,7 +4,7 @@ Clear-Host
 # Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted 
 # Install-Package chocolatey                                            
 
-$CheminDossierRestore = "V:\03.PC\01.WINDOWS\04.COMPILATION_SCRIPTS\Menu_ALL-v2\archives\Chocolatey"
+$CheminDossierRestore = "V:\03.PC\01.WINDOWS\Menu_ALL-v2\archives\Chocolatey"
 if ($env:COMPUTERNAME -match "Fixe") {
     $prefix = "Fixe"
 } elseif ($env:COMPUTERNAME -match "Portable") {

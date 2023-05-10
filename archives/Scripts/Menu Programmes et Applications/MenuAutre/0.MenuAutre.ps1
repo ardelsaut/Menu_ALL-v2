@@ -1,4 +1,4 @@
-﻿$MenuAutres = Menu-Perso -MenuTitle "Menu: Autres..." -MenuOptions "1.Partager un Dossier","2.Rechercher dans un Fichier","3.Ouvrir Codium dans un Dossier donné","0.Retour..." -Columns 1 -MaximumColumnWidth 100 -ShowCurrentSelection $True
+﻿$MenuAutres = Menu-Perso -MenuTitle "Menu: Autres..." -MenuOptions "1.Partager un Dossier","2.Rechercher dans un Fichier","3.Ouvrir Codium dans un Dossier donné","4.Lancer Windows SandBox","0.Retour..." -Columns 1 -MaximumColumnWidth 100 -ShowCurrentSelection $True
 do {
      Switch($MenuAutres){
         # 1.Partager un Dossier
@@ -22,11 +22,18 @@ do {
             & "$Retourmenu"
             exit
         }
-        # Retour...
+        # 3. Ouvrir Windows Sandbox
         3
+        {
+            & "$FileLocale\..\Scripts\Menu Programmes et Applications\MenuAutre\4.WindowsSandbox.ps1"
+            & "$Retourmenu"
+            exit
+        }
+        # Retour...
+        4
         {
             $Retourmenu = "$FileLocale\..\Menus\3.MenuProgrammesEtApplications.ps1" 
             & "$Retourmenu"
             exit
         }
-}}until ($MenuAutres -in "3")
+}}until ($MenuAutres -in "4")
