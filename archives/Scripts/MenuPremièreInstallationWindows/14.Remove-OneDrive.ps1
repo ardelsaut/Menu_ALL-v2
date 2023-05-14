@@ -1,45 +1,39 @@
-﻿# Import-Module -DisableNameChecking "$FileLocale\..\modules\Remove-ItemVerified.psm1"
-# Import-Module -DisableNameChecking "$FileLocale\..\modules\Set-ItemPropertyVerified.psm1"
-# Write-Host "Kill OneDrive process..."
-# taskkill.exe /F /IM "OneDrive.exe"
-# taskkill.exe /F /IM "explorer.exe"
-# Write-Host "Remove OneDrive."
-# if (Test-Path "$env:systemroot\System32\OneDriveSetup.exe") {
-#     & "$env:systemroot\System32\OneDriveSetup.exe" /uninstall
-# }
-# if (Test-Path "$env:systemroot\SysWOW64\OneDriveSetup.exe") {
-#     & "$env:systemroot\SysWOW64\OneDriveSetup.exe" /uninstall
-# }
-# Write-Host "Removing OneDrive leftovers..."
-# Remove-ItemVerified -Recurse -Force -ErrorAction SilentlyContinue "$env:localappdata\Microsoft\OneDrive"
-# Remove-ItemVerified -Recurse -Force -ErrorAction SilentlyContinue "$env:programdata\Microsoft OneDrive"
-# Remove-ItemVerified -Recurse -Force -ErrorAction SilentlyContinue "$env:systemdrive\OneDriveTemp"
-# # check if directory is empty before removing:
-# If ((Get-ChildItem "$env:userprofile\OneDrive" -Recurse | Measure-Object).Count -eq 0) {
-#     Remove-ItemVerified -Recurse -Force -ErrorAction SilentlyContinue "$env:userprofile\OneDrive"
-# }
-# Write-Host "Disable OneDrive via Group Policies."
-# Set-ItemPropertyVerified -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\OneDrive" "DisableFileSyncNGSC" 1
-# Write-Host "Remove Onedrive from explorer sidebar."
-# New-PSDrive -PSProvider "Registry" -Root "HKEY_CLASSES_ROOT" -Name "HKCR"
-# mkdir -Force "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
-# Set-ItemPropertyVerified -Path "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" "System.IsPinnedToNameSpaceTree" 0
-# mkdir -Force "HKCR:\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
-# Set-ItemPropertyVerified -Path "HKCR:\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" "System.IsPinnedToNameSpaceTree" 0
-# Remove-PSDrive "HKCR"
-# # Thank you Matthew Israelsson
-# Write-Host "Removing run hook for new users..."
-# reg load "hku\Default" "C:\Users\Default\NTUSER.DAT"
-# reg delete "HKEY_USERS\Default\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetup" /f
-# reg unload "hku\Default"
-# Write-Host "Removing startmenu entry..."
-# Remove-ItemVerified -Force -ErrorAction SilentlyContinue "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk"
-# Write-Host "Removing scheduled task..."
-# Get-ScheduledTask -TaskPath '\' -TaskName 'OneDrive*' -ea SilentlyContinue | Unregister-ScheduledTask -Confirm:$false
-# Write-Host "Restarting explorer..."
-# Start-Process "explorer.exe"
-# Write-Host "Waiting for explorer to complete loading..."
-# Start-Sleep 5
-# Pause
+﻿
+
+
+Write-Host "1.Menu_ALL-v2"
+Write-Host "2.Scripts"
+$TelechargementGithub = Read-Host "Que faut-il téléchager?(1/2)"
+
+if ($TelechargementGithub -eq "1") {
+    $url = "https://github.com/ardelsaut/Menu_ALL-v2/archive/refs/heads/main.zip"
+    $output = "$env:USERPROFILE\Desktop\main.zip"
+    $destination = "$env:USERPROFILE\Desktop"
+    $MenuFolder = (Get-ChildItem -Path $destination -Filter "*Menu_ALL*" -Directory).FullName
+    if (Test-Path -Path "$MenuFolder") {
+        Remove-Item -Path "$MenuFolder" -Force -Recurse
+    }
+    Invoke-WebRequest -Uri $url -OutFile $output
+    Expand-Archive -LiteralPath $output -DestinationPath $destination
+    Remove-Item -Path "$output"
+    explorer.exe "$MenuFolder"
+} elseif ($TelechargementGithub -eq "2") {
+    $url = "https://github.com/ardelsaut/Menu_ALL-v2/archive/refs/heads/main.zip"
+    $output = "$env:USERPROFILE\Desktop\main.zip"
+    $destination = "$env:USERPROFILE\Desktop"
+    $MenuFolder = (Get-ChildItem -Path $destination -Filter "*Menu_ALL*" -Directory).FullName
+    if (Test-Path -Path "$MenuFolder") {
+        Remove-Item -Path "$MenuFolder" -Force -Recurse
+    }
+    Invoke-WebRequest -Uri $url -OutFile $output
+    Expand-Archive -LiteralPath $output -DestinationPath $destination
+    Remove-Item -Path "$output"
+    explorer.exe "$MenuFolder"
+
+} else {
+    
+}
+
+
 
 

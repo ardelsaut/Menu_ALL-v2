@@ -11,28 +11,28 @@ do {
     # Disable_WinUPD
     1
     {
-        & "$DossierScriptsGlobal\Menu Programmes et Applications\MenuMiseAjour\2.DisableWindowsUpdate.ps1"
+        & "$FileLocale\..\Menu Programmes et Applications\MenuMiseAjour\2.DisableWindowsUpdate.ps1"
         & "$Retourmenu"
         exit
         }    
     # Mise à jour Winget
     2
     {
-        & "$DossierScriptsGlobal\Menu Programmes et Applications\MenuMiseAjour\3.MiseAJourWinget.ps1"
+        & "$FileLocale\..\Menu Programmes et Applications\MenuMiseAjour\3.MiseAJourWinget.ps1"
         & "$Retourmenu"
         exit
         }    
     # Mise à jour Chocolatey
     3
     {
-        & "$DossierScriptsGlobal\Menu Programmes et Applications\MenuMiseAjour\4.MiseAJourChoco.ps1"
+        & "$FileLocale\..\Menu Programmes et Applications\MenuMiseAjour\4.MiseAJourChoco.ps1"
         & "$Retourmenu"
         exit
         }   
     # Mise à jour Windows by powershell
     4
     {
-        & "$DossierScriptsGlobal\Menu Programmes et Applications\MenuMiseAjour\5.MiseAJourWindows.ps1"
+        & "$FileLocale\..\Menu Programmes et Applications\MenuMiseAjour\5.MiseAJourWindows.ps1"
         & "$Retourmenu"
         exit
     }

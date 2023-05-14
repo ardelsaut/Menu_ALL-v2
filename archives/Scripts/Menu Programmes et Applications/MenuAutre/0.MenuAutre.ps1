@@ -25,7 +25,7 @@ do {
         # 3. Ouvrir Windows Sandbox
         3
         {
-            & "$FileLocale\..\Scripts\Menu Programmes et Applications\MenuAutre\4.WindowsSandbox.ps1"
+            & "$FileLocale\..\Scripts\Menu Programmes et Applications\MenuAutre\5.WindowsSandbox.ps1"
             & "$Retourmenu"
             exit
         }

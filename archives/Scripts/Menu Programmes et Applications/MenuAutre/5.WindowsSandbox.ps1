@@ -2,6 +2,14 @@
 if (!($IsSandboxInstalled.State -eq "Enabled")){
   Enable-WindowsOptionalFeature -Online -FeatureName "Containers-DisposableClientVM" -All
   Write-Host "WindowsSandbox n'était pas activé, il faut peut-être redémarré le pc."
+  Write-Host " 3 " -NoNewline
+  Start-Sleep -Seconds 1
+  Write-Host " 2 " -NoNewline
+  Start-Sleep -Seconds 1
+  Write-Host " 1 " -NoNewline
+  Start-Sleep -Seconds 1
+  Write-Host " 0 " -NoNewline
+  Start-Sleep -Seconds 1
 }
 $FichierWsb = "C:\WindowsSandbox.wsb"
 if (Test-Path -Path "$FichierWsb") {

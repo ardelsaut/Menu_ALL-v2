@@ -42,7 +42,7 @@ if ($filePath -eq "") {
             $folderBrowserDialog.Description = "Choisissez un dossier"
             $folderBrowserDialog.SelectedPath = [System.Environment+SpecialFolder]::MyComputer
             $result = $folderBrowserDialog.ShowDialog()
-            if($result.ShowDialog() -eq 'OK') {
+            if ($result -eq [System.Windows.Forms.DialogResult]::OK) {
                 $folderPath = $folderBrowserDialog.SelectedPath
                 Clear-Host
                 codium "$folderPath" | Out-Null

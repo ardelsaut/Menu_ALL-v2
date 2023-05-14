@@ -11,7 +11,6 @@ If(!(Test-Path "V:\")){
     Clear-Host
     Exit
 }
-pause
 if ($env:COMPUTERNAME -match "Fixe") {
     $prefix = "Fixe"
 } elseif ($env:COMPUTERNAME -match "Portable") {
@@ -19,20 +18,17 @@ if ($env:COMPUTERNAME -match "Fixe") {
 } else {
     $prefix = "Inconnu"
 }
-pause
 
 $CheminTacheBackup = "$env:USERPROFILE\Documents\1.Scripts\4.TachePlanifiées"
 If(!(Test-Path $CheminTacheBackup)){
     New-Item -ItemType Directory -Path "$CheminTacheBackup" -Force
 }
-pause
 
 $taskname = "1.TacheBackupConfigPc.ps1"
 If(!(Test-Path "$CheminTacheBackup\$taskname")){
     $ContenuScript = Get-Content $PSCommandPath
     Add-Content -Value $ContenuScript -Path "$CheminTacheBackup\$taskname" -Force
 }
-pause
 
 if(!(Get-ScheduledTask -TaskName "$taskname")){
     $actionparams = @{
@@ -69,7 +65,6 @@ if(!(Get-ScheduledTask -TaskName "$taskname")){
     }
     Register-ScheduledTask @params -Force -Verbose
 }
-pause
 
 $FileNas = "V:\03.PC\01.WINDOWS\04.COMPILATION_SCRIPTS\Menu_ALL-v2"
 $destinationFolder = "$FileNas\..\..\01.DOSSIERS_CONFIG\PC-$prefix\CONFIG_$prefix`_$dateTime.ZIP"
@@ -82,7 +77,6 @@ $content = @(
     "$env:USERPROFILE\Searches"
 )
 Set-Content -Path $filePath -Value $content -Encoding UTF8
-pause
 
 if (!(Test-Path "$FileLocale\..\modules\.exe\7zr.exe")){
     if (!(Test-Path "$env:ProgramFiles\7-Zip\7z.exe")){
@@ -96,21 +90,17 @@ if (!(Test-Path "$FileLocale\..\modules\.exe\7zr.exe")){
 } else {
     $Start_7Zip = "$FileLocale\..\modules\.exe\7zr.exe"
 }
-pause
 
 & $Start_7Zip a -tzip -mx0 -mmt "$FileNas\..\..\01.DOSSIERS_CONFIG\PC-$prefix\CONFIG_$prefix`_$dateTime.ZIP" "$env:USERPROFILE\*" -xr@c:\exclude.txt
-pause
 if ($filePath){
     Remove-Item -Force -Path "$filePath" -Recurse
 }
-pause
 
 $nombreFichiers = 3
 $listeFichiers = Get-ChildItem "$FileNas\..\..\01.DOSSIERS_CONFIG\PC-$prefix" | Where-Object { $_.Name -like "*$prefix*" } | Sort-Object CreationTime
 if ($listeFichiers.Count -gt $nombreFichiers) {
     $listeFichiers[0..($listeFichiers.Count - $nombreFichiers - 1)] | Remove-Item -Force
 }
-pause
 
 # Backup Winget
 if (Get-Command winget.exe -ErrorAction SilentlyContinue) {

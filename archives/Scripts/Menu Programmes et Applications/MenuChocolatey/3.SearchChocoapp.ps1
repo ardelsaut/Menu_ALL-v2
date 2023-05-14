@@ -35,5 +35,6 @@ if ( $applicationChoco -ne "" )
     Clear-Host
     Write-Host "Installation de $applicationChoco sélectionné." -ForegroundColor Cyan
     choco install $applicationChoco
-    Pause
 }
+
+Pause
